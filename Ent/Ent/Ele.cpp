@@ -3,10 +3,6 @@
 #include <iomanip>
 #include "utils.h"
 
-Ele::Ele(){
-
-}
-
 Ele::Ele(int health_, int attack_, int defense_, int speed_, string name_, int maxHealth_) {
 	maxHealth = maxHealth_;
 	if (maxHealth_ == -1.f)
@@ -37,7 +33,7 @@ int Ele::TakeDamage(int damage) {
 
 	int effectiveDamage = initialHealth - Health();
 	PrintText(Name() + " took " + to_string(effectiveDamage) + " damage!" + "\n");
-	PrintText(Name() + " is at " + to_string(static_cast<int>(roundf(Health() * 100 / MaxHealth()))) + "% HP!" + "\n");
+	PrintText(Name() + " is at " + to_string((Health() * 100 / MaxHealth())) + "% HP!" + "\n");
 	if (Health() < 0)
 	{
 		PrintText(Name() + " died!" + "\n");

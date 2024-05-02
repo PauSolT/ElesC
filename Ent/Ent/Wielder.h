@@ -1,10 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
+#include "Ele.h"
 
 using namespace std;
-
-class Ele;
 
 class Wielder
 {

@@ -3,10 +3,11 @@
 #include "utils.h"
 #include <iostream>
 
-
-Move::Move(int potency_, int accuracy_, string name_, string description_) {
+Move::Move(int potency_, int accuracy_, int uses_, string name_, string description_) {
 	potency = potency_;
 	accuracy = accuracy_;
+	maxUses = uses_;
+	uses = uses_;
 	name = name_;
 	description = description_;
 }
@@ -14,7 +15,8 @@ Move::Move(int potency_, int accuracy_, string name_, string description_) {
 void Move::Log() {
 	PrintText("Name: " + Name() + "\n"
 		+ "Potency: " + to_string(Potency()) + "\n"
-		+ "Accuracy: " + to_string(Accuracy()) + "\n");
+		+ "Accuracy: " + to_string(Accuracy()) + "\n"
+		+ "Uses: " + to_string(Uses()) + "/" + to_string(MaxUses()) + "\n");
 }
 
 bool Move::UseMovement(Ele &user, Ele &target)

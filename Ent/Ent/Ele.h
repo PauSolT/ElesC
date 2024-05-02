@@ -15,19 +15,19 @@ public:
 	};
 
 private:
-	int maxHealth;
-	int health;
-	int attack;
-	int defense;
-	int speed;
-	int level;
-	string name;
+	int maxHealth = 0;
+	int health = 0;
+	int attack = 0;
+	int defense = 0;
+	int speed = 0;
+	int level = 1;
+	string name = " ";
 	vector<Move> moves;
 	EleState state = EleState::InParty;
 	
 
 public:
-	Ele();
+	Ele() {}
 	Ele(int health_, int attack_, int defense_, int speed_, string name_, int maxHealth_ = -1.f);
 	int &Health() { return health; }
 	const int &Health() const { return health; }
