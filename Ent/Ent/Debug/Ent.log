@@ -1,0 +1,6 @@
+﻿  Ele.cpp
+C:\ExercicesC++\Projects\Ent\Ent\Ele.cpp(37,82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Move.cpp
+  utils.cpp
+  Generating Code...
+  Ent.vcxproj -> C:\ExercicesC++\Projects\Ent\Debug\Ent.exe
