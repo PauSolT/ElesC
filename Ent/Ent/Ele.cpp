@@ -20,7 +20,7 @@ void Ele::Log() {
 	 PrintText("Name: " + Name() + "\n" 
 		+ "HP: " + to_string(Health()) + "/" + to_string(MaxHealth()) + "\n"
 		+ "Defense: " + to_string(Defense()) + "\n"
-		+ "Speed: " + to_string(Speed()) + "\n");
+		+ "Speed: " + to_string(Speed()));
 }
 
 int Ele::TakeDamage(int damage) {
@@ -32,12 +32,35 @@ int Ele::TakeDamage(int damage) {
 	}
 
 	int effectiveDamage = initialHealth - Health();
-	PrintText(Name() + " took " + to_string(effectiveDamage) + " damage!" + "\n");
-	PrintText(Name() + " is at " + to_string((Health() * 100 / MaxHealth())) + "% HP!" + "\n");
+	PrintText(Name() + " took " + to_string(effectiveDamage) + " damage!");
+	PrintText(Name() + " is at " + to_string((Health() * 100 / MaxHealth())) + "% HP!");
 	if (Health() < 0)
 	{
-		PrintText(Name() + " died!" + "\n");
+		PrintText(Name() + " died!");
 	}
 
 	return effectiveDamage;
+}
+
+
+void Ele::ChangeStat(int stages, int stat)
+{
+	int& statToChange = (stat == 1) ? defenseModifier : 
+		(stat == 2) ? speedModifier : attackModifier;
+
+	if (statToChange >= maxModifier) {
+		PrintText("Attack can't be higher!");
+	}
+	else if (statToChange <= -maxModifier) {
+		PrintText("Attack can't be lower!");
+	}
+	else {
+		statToChange += stages;
+		if (statToChange > maxModifier) {
+			statToChange = maxModifier;
+		}
+		else if (statToChange < -maxModifier) {
+			statToChange = -maxModifier;
+		}
+	}
 }

@@ -8,11 +8,11 @@
 #include <thread>
 #include <iomanip>
 
-int CalculateDamage(Ele& attacker, Ele& defender, Move& move) {
+int CalculateDamage(Ele &attacker, Ele &defender, Move& move) {
 
     float damage = 1 + (static_cast<float>(move.Potency()) * 
-            static_cast<float>(attacker.Attack()) / 
-            static_cast<float>(defender.Defense()));
+            static_cast<float>(attacker.Attack()) * ( 1+ attacker.AttackModifier() * 0.1f ) /
+            static_cast<float>(defender.Defense()) * (1 + defender.DefenseModifier() * 0.1f));
     
     if (damage < 1)
     {
@@ -31,7 +31,7 @@ int RandomNumber(int min, int max) {
     return distribution(gen);
 }
 
-void PrintText(string text, long long customTime)
+void PrintText(string text, long long customTime, bool wantEndOfLine)
 {
     for (char c : text) {
         cout << c;
@@ -39,6 +39,10 @@ void PrintText(string text, long long customTime)
 
         this_thread::sleep_for(chrono::milliseconds(customTime));
     }
+    if (wantEndOfLine) {
+        cout << endl;
+    }
 }
+
 
 

@@ -2,7 +2,7 @@
 #include "Move.h"
 #include <map>
 
-static class AllMoves
+class AllMoves
 {
 public:
 	static map<string, Move> allMoves;

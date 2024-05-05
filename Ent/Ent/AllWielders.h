@@ -2,7 +2,7 @@
 #include "Wielder.h"
 #include <map>
 
-static class AllWielders
+class AllWielders
 {
 public:
 	static map<string, Wielder> allWielders;

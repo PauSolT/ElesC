@@ -2,7 +2,7 @@
 #include "Ele.h"
 #include <map>
 
-static class AllEles
+class AllEles
 {
 public:
 	static map<string, Ele> allEles;

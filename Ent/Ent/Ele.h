@@ -21,6 +21,12 @@ private:
 	int defense = 0;
 	int speed = 0;
 	int level = 1;
+
+	int attackModifier = 0;
+	int defenseModifier = 0;
+	int speedModifier = 0;
+	int maxModifier = 5;
+
 	string name = " ";
 	vector<Move> moves;
 	EleState state = EleState::InParty;
@@ -41,6 +47,12 @@ public:
 	const int& Speed() const { return speed; }
 	int& Level() { return level; }
 	const int& Level() const { return level; }
+	int& AttackModifier() { return attackModifier; }
+	const int& AttackModifier() const { return attackModifier; }
+	int& DefenseModifier() { return defenseModifier; }
+	const int& DefenseModifier() const { return defenseModifier; }
+	int& SpeedModifier() { return speedModifier; }
+	const int& SpeedModifier() const { return speedModifier; }
 	string& Name() { return name; }
 	const string& Name() const { return name; }
 	vector<Move>& Moves() { return moves; }
@@ -49,6 +61,7 @@ public:
 	const EleState& State() const { return state; }
 
 	int TakeDamage(int damage);
+	void ChangeStat(int stages, int stat);
 	void Log();
 };
 

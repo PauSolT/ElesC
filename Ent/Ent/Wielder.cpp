@@ -1,16 +1,18 @@
 #include "Wielder.h"
 #include "Ele.h"
 
-Ele Wielder::GetEleInCombat() {
-	Ele eleInCombat;
-	for (Ele ele : eles)
+Wielder::Wielder(string name_) {
+	name = name_;
+}
+
+Ele& Wielder::GetEleInCombat() {
+	for (Ele& ele : eles)
 	{
 		if (ele.State() == Ele::EleState::InCombat) 
 		{
-			eleInCombat = ele;
+			return ele;
 		}
 	}
-	return eleInCombat;
 }
 
 bool Wielder::HasElesAlive() {

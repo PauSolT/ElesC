@@ -1,2 +1,6 @@
-﻿  Wielder.cpp
+﻿  Ele.cpp
+  Ent.cpp
+  Move.cpp
+  utils.cpp
+  Generating Code...
   Ent.vcxproj -> C:\ExercicesC++\Projects\ElesC\Ent\Debug\Ent.exe
