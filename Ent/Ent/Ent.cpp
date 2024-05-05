@@ -13,6 +13,8 @@ map<string, Wielder> allWielders;
 Wielder currentOpponent;
 
 void StartCombat();
+void StartDuel();
+void StartTurn();
 void StartRun();
 
 int main()
@@ -37,21 +39,49 @@ int main()
     player.Eles().push_back(eles["Ele1"]);
     allWielders["wielder1"].Eles().push_back(eles["Ele2"]);
 
-    StartCombat();
+    StartRun();
 
-    player.GetEleInCombat().Moves()[1].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
-
+    StartDuel();
+    StartTurn();
+    StartTurn();
 }
 
 void StartRun() {
     PrintText("What's your name?");
     cin >> player.Name();
-    PrintText("Great.");
+    PrintText("Great");
 }
 
-void StartCombat() {
-    player.Eles()[0].State() = Ele::EleState::InCombat;
+void StartDuel() {
     allWielders["wielder1"].Eles()[0].State() = Ele::EleState::InCombat;
     currentOpponent = allWielders["wielder1"];
+    PrintText(currentOpponent.Name() + " sends " + allWielders["wielder1"].Eles()[0].Name() + "!");
+    PrintText("Which one will you choose?");
+    player.SelectEle();
+   
+}
+
+void StartTurn() {
+    int playerChoice;
+    int playerMove;
+    int opponentMove = RandomNumber(0, currentOpponent.GetEleInCombat().Moves().size() -1);
+    PrintText("What will you do?");
+    PrintText("1. Select Move");
+    cin >> playerChoice;
+    if (playerChoice == 1)
+    {
+        playerMove = player.SelectMove();
+    }
+
+    if (player.GetEleInCombat().Speed() >= currentOpponent.GetEleInCombat().Speed())
+    {
+        player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
+        currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
+
+    } else if (player.GetEleInCombat().Speed() < currentOpponent.GetEleInCombat().Speed())
+    {
+        currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
+        player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
+    }
 
 }

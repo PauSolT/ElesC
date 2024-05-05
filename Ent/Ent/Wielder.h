@@ -22,6 +22,7 @@ public:
 	Ele& GetEleInCombat();
 	bool HasElesAlive();
 	void SelectEle();
+	int SelectMove();
 
 };
 

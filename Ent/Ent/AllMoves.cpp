@@ -11,5 +11,9 @@ void AllMoves::InitAllMoves() {
 	allMoves["move6"] = Move(100, 80, 10, "move 6", Move::MoveType::Offensive, "description");
 	allMoves["move7"] = Move(120, 75, 5, "move 7", Move::MoveType::Offensive, "description");
 	allMoves["move8"] = Move(150, 70, 5, "move 8", Move::MoveType::Offensive, "description");
+	allMoves["move9"] = Move(1, 100, 15, "buff attack", Move::MoveType::Buff, "description", 0);
+	allMoves["move10"] = Move(1, 100, 15, "debuff attack", Move::MoveType::Debuff, "description", 0);
+	allMoves["move11"] = Move(1, 100, 15, "buff defense", Move::MoveType::Buff, "description", 1);
+	allMoves["move12"] = Move(1, 100, 15, "debuff defense", Move::MoveType::Debuff, "description", 1);
 
 }

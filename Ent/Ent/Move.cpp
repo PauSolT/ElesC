@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <iostream>
 
-Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_) {
+Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_, int stat_) {
 	potency = potency_;
 	accuracy = accuracy_;
 	maxUses = uses_;
@@ -11,6 +11,10 @@ Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_,
 	name = name_;
 	type = type_;
 	description = description_;
+
+	if (stat = !- 1) {
+		stat = stat_;
+	}
 }
 
 void Move::Log() {
@@ -20,9 +24,10 @@ void Move::Log() {
 		+ "Uses: " + to_string(Uses()) + "/" + to_string(MaxUses()));
 }
 
-bool Move::UseMovement(Ele &user, Ele &target,int stages, int stat)
+bool Move::UseMovement(Ele &user, Ele &target)
 {
 	PrintText(user.Name() + " uses " + Name() + "!");
+	uses--;
 	bool moveHits = true;
 	if (RandomNumber(1, 100) > accuracy)
 	{

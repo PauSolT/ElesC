@@ -22,13 +22,20 @@ private:
 	int accuracy = 0;
 	int maxUses = 0;
 	int uses = 0;
+	int stat = -1;
 	string name = " ";
 	string description = " ";
 	MoveType type = MoveType::Offensive;
 
+	void UseOffensiveMovement(Ele& user, Ele& target);
+	void UseBuffMovement(Ele& user, int stages, int stat);
+	void UseDebuffMovement(Ele& target, int stages, int stat);
+	void UseDefensiveMovement(Ele& user);
+	void UseMixedMovement(Ele& user, Ele& target, int stages, int stat);
+
 public:
 	Move() {}
-	Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_ = " ");
+	Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_ = " ", int stat_ = -1);
 	int& Potency() { return potency; }
 	const int& Potency() const { return potency; }
 	int& Accuracy() { return accuracy; }
@@ -44,12 +51,8 @@ public:
 	string& Description() { return description; }
 	const string& Description() const { return description; }
 
-	bool UseMovement(Ele &user, Ele &target, int stages = 0, int stat = 0);
-	void UseOffensiveMovement(Ele& user, Ele& target);
-	void UseBuffMovement(Ele& user, int stages, int stat);
-	void UseDebuffMovement(Ele& target, int stages, int stat);
-	void UseDefensiveMovement(Ele& user);
-	void UseMixedMovement(Ele& user, Ele& target, int stages, int stat);
+	bool UseMovement(Ele &user, Ele &target);
+
 	
 	void Log();
 
