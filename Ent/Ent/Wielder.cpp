@@ -17,7 +17,7 @@ Ele& Wielder::GetEleInCombat() {
 	}
 }
 
-bool Wielder::HasElesAlive() {
+bool Wielder::AllElesDead() {
 	bool allDead = true;
 	for (unsigned int i = 0; i < eles.size(); i++)
 	{

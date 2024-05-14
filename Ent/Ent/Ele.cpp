@@ -20,7 +20,8 @@ void Ele::Log() {
 	 PrintText("Name: " + Name() + "\n" 
 		+ "HP: " + to_string(Health()) + "/" + to_string(MaxHealth()) + "\n"
 		+ "Defense: " + to_string(Defense()) + "\n"
-		+ "Speed: " + to_string(Speed()));
+		+ "Speed: " + to_string(Speed()) + "\n"
+		+ StateToString());
 }
 
 int Ele::TakeDamage(int damage) {
@@ -34,12 +35,18 @@ int Ele::TakeDamage(int damage) {
 	int effectiveDamage = initialHealth - Health();
 	PrintText(Name() + " took " + to_string(effectiveDamage) + " damage!");
 	PrintText(Name() + " is at " + to_string((Health() * 100 / MaxHealth())) + "% HP!");
-	if (Health() < 0)
+	if (Health() <= 0)
 	{
-		PrintText(Name() + " died!");
+		Die();
 	}
 
 	return effectiveDamage;
+}
+
+void Ele::Die()
+{
+	PrintText(Name() + " died!");
+	State() = Ele::EleState::Dead;
 }
 
 
@@ -63,4 +70,23 @@ void Ele::ChangeStat(int stages, int stat)
 			statToChange = -maxModifier;
 		}
 	}
+}
+
+string Ele::StateToString() {
+	string stateToString;
+	switch (state)
+	{
+	case Ele::EleState::InCombat:
+		stateToString = "In Combat";
+		break;
+	default:
+	case Ele::EleState::InParty:
+		stateToString = "In Party";
+		break;
+	case Ele::EleState::Dead:
+		stateToString = "Dead";
+		break;
+	}
+
+	return stateToString;
 }

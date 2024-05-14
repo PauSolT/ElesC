@@ -7,7 +7,7 @@
 #include "utils.h"
 
 Wielder player("player");
-map<string, Ele> eles;
+map<string, Ele> elesOfAllGame;
 map<string, Move> moves;
 map<string, Wielder> allWielders;
 Wielder currentOpponent;
@@ -22,22 +22,22 @@ int main()
     AllMoves::InitAllMoves();
     AllEles::InitAllEles();
     AllWielders::InitAllWielders();
-    eles = AllEles::allEles;
+    elesOfAllGame = AllEles::allEles;
     moves = AllMoves::allMoves;
     allWielders = AllWielders::allWielders;
     
-    eles["Ele1"].Moves().push_back(moves["move1"]);
-    eles["Ele1"].Moves().push_back(moves["move3"]);
-    eles["Ele1"].Moves().push_back(moves["move5"]);
-    eles["Ele1"].Moves().push_back(moves["move6"]);
+    elesOfAllGame["Ele1"].Moves().push_back(moves["move1"]);
+    elesOfAllGame["Ele1"].Moves().push_back(moves["move3"]);
+    elesOfAllGame["Ele1"].Moves().push_back(moves["move5"]);
+    elesOfAllGame["Ele1"].Moves().push_back(moves["move6"]);
 
-    eles["Ele2"].Moves().push_back(moves["move2"]);
-    eles["Ele2"].Moves().push_back(moves["move4"]);
-    eles["Ele2"].Moves().push_back(moves["move5"]);
-    eles["Ele2"].Moves().push_back(moves["move7"]);
+    elesOfAllGame["Ele2"].Moves().push_back(moves["move2"]);
+    elesOfAllGame["Ele2"].Moves().push_back(moves["move4"]);
+    elesOfAllGame["Ele2"].Moves().push_back(moves["move5"]);
+    elesOfAllGame["Ele2"].Moves().push_back(moves["move7"]);
 
-    player.Eles().push_back(eles["Ele1"]);
-    allWielders["wielder1"].Eles().push_back(eles["Ele2"]);
+    player.Eles().push_back(elesOfAllGame["Ele1"]);
+    allWielders["wielder1"].Eles().push_back(elesOfAllGame["Ele2"]);
 
     StartRun();
 
@@ -49,7 +49,7 @@ int main()
 void StartRun() {
     PrintText("What's your name?");
     cin >> player.Name();
-    PrintText("Great");
+    //PrintText("Great");
 }
 
 void StartDuel() {
@@ -76,12 +76,44 @@ void StartTurn() {
     if (player.GetEleInCombat().Speed() >= currentOpponent.GetEleInCombat().Speed())
     {
         player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
-        currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
-
-    } else if (player.GetEleInCombat().Speed() < currentOpponent.GetEleInCombat().Speed())
+        if (currentOpponent.GetEleInCombat().State() != Ele::EleState::Dead) {
+            currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
+        }
+        else {
+            if (currentOpponent.AllElesDead()) {
+                PrintText("You win!");
+            }
+        }
+    }
+    else if (player.GetEleInCombat().Speed() < currentOpponent.GetEleInCombat().Speed())
     {
         currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
-        player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
+        if (player.GetEleInCombat().State() != Ele::EleState::Dead) {
+            player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
+        }
     }
+
+    if (currentOpponent.AllElesDead()) {
+        PrintText("You win!");
+    }
+    else {
+        for (unsigned int i = 0; i < currentOpponent.Eles().size(); i++)
+        {
+            Ele& ele = currentOpponent.Eles()[i];
+            if (ele.State() == Ele::EleState::InParty) {
+                ele.State() = Ele::EleState::InCombat;
+                i = currentOpponent.Eles().size();
+            }
+        }
+    }
+
+    if (player.AllElesDead()) {
+        PrintText("You have no Eles to fight with!");
+        PrintText("You lose!");
+    }
+    else {
+        player.SelectEle();
+    }
+
 
 }

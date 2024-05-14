@@ -61,7 +61,11 @@ public:
 	const EleState& State() const { return state; }
 
 	int TakeDamage(int damage);
+	void Die();
 	void ChangeStat(int stages, int stat);
 	void Log();
+
+	string StateToString();
+
 };
 

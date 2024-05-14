@@ -12,7 +12,7 @@ Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_,
 	type = type_;
 	description = description_;
 
-	if (stat = !- 1) {
+	if (stat != -1) {
 		stat = stat_;
 	}
 }

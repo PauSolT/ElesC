@@ -20,7 +20,7 @@ public:
 	const string& Name() const { return name; }
 
 	Ele& GetEleInCombat();
-	bool HasElesAlive();
+	bool AllElesDead();
 	void SelectEle();
 	int SelectMove();
 
