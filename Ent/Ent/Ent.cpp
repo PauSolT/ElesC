@@ -14,7 +14,7 @@ Wielder currentOpponent;
 
 void StartCombat();
 void StartDuel();
-void StartTurn();
+bool StartTurn();
 void StartRun();
 
 int main()
@@ -42,8 +42,16 @@ int main()
     StartRun();
 
     StartDuel();
-    StartTurn();
-    StartTurn();
+    bool inCombat = true;
+
+    do
+    {
+        inCombat = StartTurn();
+    } while (inCombat);
+
+    PrintText("YOU FINISHED THE GAME!");
+
+
 }
 
 void StartRun() {
@@ -61,7 +69,8 @@ void StartDuel() {
    
 }
 
-void StartTurn() {
+bool StartTurn() {
+    bool startAnotherTurn = true;
     int playerChoice;
     int playerMove;
     int opponentMove = RandomNumber(0, currentOpponent.GetEleInCombat().Moves().size() -1);
@@ -76,44 +85,46 @@ void StartTurn() {
     if (player.GetEleInCombat().Speed() >= currentOpponent.GetEleInCombat().Speed())
     {
         player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
-        if (currentOpponent.GetEleInCombat().State() != Ele::EleState::Dead) {
+        if (currentOpponent.HasEleInCombat()) {
             currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
-        }
-        else {
-            if (currentOpponent.AllElesDead()) {
-                PrintText("You win!");
-            }
         }
     }
     else if (player.GetEleInCombat().Speed() < currentOpponent.GetEleInCombat().Speed())
     {
         currentOpponent.GetEleInCombat().Moves()[opponentMove].UseMovement(currentOpponent.GetEleInCombat(), player.GetEleInCombat());
-        if (player.GetEleInCombat().State() != Ele::EleState::Dead) {
+        if (player.HasEleInCombat()) {
             player.GetEleInCombat().Moves()[playerMove].UseMovement(player.GetEleInCombat(), currentOpponent.GetEleInCombat());
         }
     }
 
-    if (currentOpponent.AllElesDead()) {
-        PrintText("You win!");
-    }
-    else {
-        for (unsigned int i = 0; i < currentOpponent.Eles().size(); i++)
-        {
-            Ele& ele = currentOpponent.Eles()[i];
-            if (ele.State() == Ele::EleState::InParty) {
-                ele.State() = Ele::EleState::InCombat;
-                i = currentOpponent.Eles().size();
+
+    if (!currentOpponent.HasEleInCombat()) {
+        if (currentOpponent.AllElesDead()) {
+            PrintText("You win!");
+            startAnotherTurn = false;
+        }
+        else {
+            for (unsigned int i = 0; i < currentOpponent.Eles().size(); i++)
+            {
+                Ele& ele = currentOpponent.Eles()[i];
+                if (ele.State() == Ele::EleState::InParty) {
+                    ele.State() = Ele::EleState::InCombat;
+                    i = currentOpponent.Eles().size();
+                }
             }
         }
     }
 
-    if (player.AllElesDead()) {
-        PrintText("You have no Eles to fight with!");
-        PrintText("You lose!");
-    }
-    else {
-        player.SelectEle();
+    if (!player.HasEleInCombat()) {
+        if (player.AllElesDead()) {
+            PrintText("You have no Eles to fight with!");
+            PrintText("You lose!");
+            startAnotherTurn = false;
+        }
+        else {
+            player.SelectEle();
+        }
     }
 
-
+    return startAnotherTurn;
 }

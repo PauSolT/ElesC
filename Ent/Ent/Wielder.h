@@ -20,9 +20,11 @@ public:
 	const string& Name() const { return name; }
 
 	Ele& GetEleInCombat();
+	bool HasEleInCombat();
 	bool AllElesDead();
 	void SelectEle();
 	int SelectMove();
+
 
 };
 

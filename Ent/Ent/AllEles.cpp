@@ -3,8 +3,8 @@
 map<string, Ele> AllEles::allEles;
 
 void AllEles::InitAllEles() {
-	allEles["Ele1"] = Ele(70, 90, 65, 70, "Ele1");
-	allEles["Ele2"] = Ele(110, 65, 80, 60, "Ele2");
+	allEles["Ele1"] = Ele(100, 90, 65, 70, "Ele1");
+	allEles["Ele2"] = Ele(110, 45, 80, 60, "Ele2");
 	allEles["Ele3"] = Ele(110, 65, 80, 60, "Ele3");
 	allEles["Ele4"] = Ele(110, 65, 80, 60, "Ele4");
 	allEles["Ele5"] = Ele(110, 65, 80, 60, "Ele5");

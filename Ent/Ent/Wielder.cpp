@@ -17,6 +17,19 @@ Ele& Wielder::GetEleInCombat() {
 	}
 }
 
+bool Wielder::HasEleInCombat() {
+	bool anyEleInCombat = false;
+	for (unsigned int i = 0; i < eles.size(); i++)
+	{
+		if (eles[i].State() == Ele::EleState::InCombat)
+		{
+			anyEleInCombat = true;
+			i = eles.size();
+		}
+	}
+	return anyEleInCombat;
+}
+
 bool Wielder::AllElesDead() {
 	bool allDead = true;
 	for (unsigned int i = 0; i < eles.size(); i++)
@@ -25,6 +38,7 @@ bool Wielder::AllElesDead() {
 			eles[i].State() == Ele::EleState::InParty)
 		{
 			allDead = false;
+			i = eles.size();
 		}
 	}
 	return allDead;
