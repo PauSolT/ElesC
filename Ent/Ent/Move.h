@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Constants.h"
 
 using namespace std;
 
@@ -11,10 +12,7 @@ public:
 	enum class MoveType
 	{
 		Offensive,
-		Buff,
-		Debuff,
 		Defensive,
-		Mixed
 	};
 
 private:
@@ -23,19 +21,19 @@ private:
 	int maxUses = 0;
 	int uses = 0;
 	int stat = -1;
+	bool affectsEveryone = false;
 	string name = " ";
 	string description = " ";
 	MoveType type = MoveType::Offensive;
+	Elem element = Elem::Normal;
+
 
 	void UseOffensiveMovement(Ele& user, Ele& target);
-	void UseBuffMovement(Ele& user, int stages, int stat);
-	void UseDebuffMovement(Ele& target, int stages, int stat);
-	void UseDefensiveMovement(Ele& user);
-	void UseMixedMovement(Ele& user, Ele& target, int stages, int stat);
+	void UseDefensiveMovement(Ele& user,  bool affectsEveryone = false);
 
 public:
 	Move() {}
-	Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_ = " ", int stat_ = -1);
+	Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, Elem element_, string description_ = " ", bool affectsEveryone_ = false);
 	int& Potency() { return potency; }
 	const int& Potency() const { return potency; }
 	int& Accuracy() { return accuracy; }
@@ -48,6 +46,8 @@ public:
 	const string& Name() const { return name; }
 	MoveType& Type() { return type; }
 	const MoveType& Type() const { return type; }
+	Elem& Element() { return element; }
+	const Elem& Element() const { return element; }
 	string& Description() { return description; }
 	const string& Description() const { return description; }
 

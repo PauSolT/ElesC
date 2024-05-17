@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <iostream>
 
-Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, string description_, int stat_) {
+Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_, Elem element_, string description_, bool affectsEveryone_) {
 	potency = potency_;
 	accuracy = accuracy_;
 	maxUses = uses_;
@@ -11,10 +11,8 @@ Move::Move(int potency_, int accuracy_, int uses_, string name_, MoveType type_,
 	name = name_;
 	type = type_;
 	description = description_;
-
-	if (stat != -1) {
-		stat = stat_;
-	}
+	element = element_;
+	affectsEveryone = affectsEveryone_;
 }
 
 void Move::Log() {
@@ -41,17 +39,8 @@ bool Move::UseMovement(Ele &user, Ele &target)
 		default:
 			UseOffensiveMovement(user, target);
 			break;
-		case MoveType::Buff:
-			UseBuffMovement(user, 0, 0);
-			break;
-		case MoveType::Debuff:
-			UseDebuffMovement(target, 0, 0);
-			break;
 		case MoveType::Defensive:
 			UseDefensiveMovement(user);
-			break;
-		case MoveType::Mixed:
-			UseMixedMovement(user, target, 0, 0);
 			break;
 		}
 	}
@@ -64,20 +53,17 @@ void Move::UseOffensiveMovement(Ele& user, Ele& target)
 	target.TakeDamage(CalculateDamage(user, target, *this));
 }
 
-void Move::UseBuffMovement(Ele& user, int stages, int stat)
+void Move::UseDefensiveMovement(Ele& user, bool affectsEveryone)
 {
-	user.ChangeStat(stages, stat);
+	if (!affectsEveryone)
+	{
+		user.Heal(potency);
+	}
+	else {
+		for (Ele ele : player.Eles())
+		{
+			ele.Heal(potency);
+		}
+	}
 }
 
-void Move::UseDebuffMovement(Ele& target, int stages, int stat)
-{
-	target.ChangeStat(stages, stat);
-}
-
-void Move::UseDefensiveMovement(Ele& user)
-{
-}
-
-void Move::UseMixedMovement(Ele& user, Ele& target, int stages, int stat)
-{
-}

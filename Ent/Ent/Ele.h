@@ -30,11 +30,12 @@ private:
 	string name = " ";
 	vector<Move> moves;
 	EleState state = EleState::InParty;
-	
+	Elem element = Elem::Normal;
+
 
 public:
 	Ele() {}
-	Ele(int health_, int attack_, int defense_, int speed_, string name_, int maxHealth_ = -1.f);
+	Ele(int health_, int attack_, int defense_, int speed_, string name_, Elem element_, int maxHealth_ = -1.f);
 	int &Health() { return health; }
 	const int &Health() const { return health; }
 	int& MaxHealth() { return maxHealth; }
@@ -57,10 +58,13 @@ public:
 	const string& Name() const { return name; }
 	vector<Move>& Moves() { return moves; }
 	const vector<Move>& Moves() const{ return moves; }
+	Elem& Element() { return element; }
+	const Elem& Element() const { return element; }
 	EleState& State() { return state; }
 	const EleState& State() const { return state; }
 
 	int TakeDamage(int damage);
+	int Heal(int healing);
 	void Die();
 	void ChangeStat(int stages, int stat);
 	void Log();

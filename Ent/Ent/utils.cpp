@@ -14,6 +14,8 @@ int CalculateDamage(Ele &attacker, Ele &defender, Move& move) {
             static_cast<float>(attacker.Attack()) * ( 1+ attacker.AttackModifier() * 0.1f ) /
             static_cast<float>(defender.Defense()) * (1 + defender.DefenseModifier() * 0.1f));
     
+    damage *= GetElemAdvantage(move.Element(), defender.Element());
+
     if (damage < 1)
     {
         damage = 1;
@@ -44,5 +46,15 @@ void PrintText(string text, long long customTime, bool wantEndOfLine)
     }
 }
 
-
-
+float GetElemAdvantage(Elem attacker, Elem defender) {
+    switch (attacker) {
+    case Elem::Water:
+        return (defender == Elem::Fire) ? 1.5 : ((defender == Elem::Grass) ? 0.75 : 1);
+    case Elem::Fire:
+        return (defender == Elem::Grass) ? 1.5 : ((defender == Elem::Water) ? 0.75 : 1);
+    case Elem::Grass:
+        return (defender == Elem::Water) ? 1.5 : ((defender == Elem::Fire) ? 0.75 : 1);
+    default:
+        return 1;
+    }
+}

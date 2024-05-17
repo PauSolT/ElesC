@@ -6,13 +6,11 @@
 #include "AllWielders.h"
 #include "utils.h"
 
-Wielder player("player");
 map<string, Ele> elesOfAllGame;
 map<string, Move> moves;
 map<string, Wielder> allWielders;
 Wielder currentOpponent;
 
-void StartCombat();
 void StartDuel();
 bool StartTurn();
 void StartRun();
@@ -57,7 +55,6 @@ int main()
 void StartRun() {
     PrintText("What's your name?");
     cin >> player.Name();
-    //PrintText("Great");
 }
 
 void StartDuel() {

@@ -3,7 +3,7 @@
 #include <iomanip>
 #include "utils.h"
 
-Ele::Ele(int health_, int attack_, int defense_, int speed_, string name_, int maxHealth_) {
+Ele::Ele(int health_, int attack_, int defense_, int speed_, string name_, Elem element_, int maxHealth_) {
 	maxHealth = maxHealth_;
 	if (maxHealth_ == -1.f)
 	{
@@ -14,6 +14,7 @@ Ele::Ele(int health_, int attack_, int defense_, int speed_, string name_, int m
 	defense = defense_;
 	speed = speed_;
 	name = name_;
+	element = element_;
 }
 
 void Ele::Log() {
@@ -41,6 +42,18 @@ int Ele::TakeDamage(int damage) {
 	}
 
 	return effectiveDamage;
+}
+
+int Ele::Heal(int healingPercent)
+{
+	health += healingPercent / 100 * maxHealth;
+
+	if (health > maxHealth)
+	{
+		health = maxHealth;
+	}
+
+	PrintText(name + " has been healed!");
 }
 
 void Ele::Die()

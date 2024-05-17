@@ -152,6 +152,7 @@
     <ClInclude Include="AllEles.h" />
     <ClInclude Include="AllMoves.h" />
     <ClInclude Include="AllWielders.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Ele.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="utils.h" />
